@@ -4,6 +4,7 @@ import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.Map;
 
+
 public class EvaluationService {
 
 	/**
@@ -13,7 +14,18 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public String reverse(String string) {
+	public static void main(String[] args) {
+		System.out.println(reverse("Example"));
+		acronym("Example Of Something");
+		Triangle triangle = new Triangle(3,3,4);
+		System.out.println(triangle.isScalene());
+		System.out.println(getScrabbleScore("Quiet"));
+		//System.out.println(reverse("Example"));
+		//System.out.println(reverse("Example"));
+		
+	}
+	//Checked
+	public static String reverse(String string) {
 		char[] reversed = new char[string.length()];
 		for (int i = reversed.length - 1, j=0; i >= 0; i--, j++) {
 			reversed[j] = string.charAt(i);
@@ -29,9 +41,21 @@ public class EvaluationService {
 	 * @param phrase
 	 * @return
 	 */
-	public String acronym(String phrase) {
+	public static String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		char[] ch = new char[phrase.length()];
+		String acro = " ";		
+		ch[0] = phrase.charAt(0);
+		for(int i = 1; i < phrase.length(); i++)
+		{		  	
+		 if (phrase.charAt(i) == ' ')
+		 {
+			 ch[i] = phrase.charAt(i + 1);
+		 }
+		}
+		//System.out.println(ch);
+
+		return acro;
 	}
 
 	/**
@@ -43,6 +67,8 @@ public class EvaluationService {
 	 * different lengths.
 	 *
 	 */
+	
+	//Checked
 	static class Triangle {
 		private double sideOne;
 		private double sideTwo;
@@ -85,16 +111,25 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo&& sideTwo == sideThree&& sideThree ==sideOne) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo&& sideTwo != sideThree|| sideTwo == sideThree&& sideOne != sideThree|| sideThree ==sideOne &&sideOne != sideTwo) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne != sideTwo&& sideTwo != sideThree&& sideThree !=sideOne) {
+				return true;
+			}
 			return false;
 		}
 
@@ -115,9 +150,99 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public int getScrabbleScore(String string) {
+	//Checked
+	public static int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		int score = 0;
+		
+		for(int i = 0; i < string.length();i++)
+		{
+			switch(string.toUpperCase().charAt(i))
+			{
+			case 'A':
+				score += 1;
+				break;
+			case 'B':
+				score += 3;
+				break;
+			case 'C':
+				score += 3;
+				break;
+			case 'D':
+				score += 2;
+				break;
+			case 'E':
+				score += 1;
+				break;
+			case 'F':
+				score += 4;
+				break;
+			case 'G':
+				score += 2;
+				break;
+			case 'H':
+				score += 4;
+				break;
+			case 'I':
+				score += 1;
+				break;
+			case 'J':
+				score += 8;
+				break;
+			case 'K':
+				score += 5;
+				break;
+			case 'L':
+				score += 1;
+				break;
+			case 'M':
+				score += 3;
+				break;
+			case 'N':
+				score += 1;
+				break;
+			case 'O':
+				score += 1;
+				break;
+			case 'P':
+				score += 3;
+				break;
+			case 'Q':
+				score += 10;
+				break;
+			case 'R':
+				score += 1;
+				break;
+			case 'S':
+				score += 1;
+				break;
+			case 'T':
+				score += 1;
+				break;
+			case 'U':
+				score += 1;
+				break;
+			case 'V':
+				score += 4;
+				break;
+			case 'W':
+				score += 4;
+				break;
+			case 'X':
+				score += 8;
+				break;
+			case 'Y':
+				score += 4;
+				break;
+			case 'Z':
+				score += 10;
+				break;	
+			default:
+				System.out.println("This isn't a letter");
+				break;
+			}
+		}
+		return score;
 	}
 
 	/**
@@ -153,6 +278,7 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
+		
 		return null;
 	}
 
@@ -538,6 +664,7 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
+		
 		return 0;
 	}
 
