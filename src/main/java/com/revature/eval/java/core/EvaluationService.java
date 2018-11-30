@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class EvaluationService {
 		Triangle triangle = new Triangle(3,3,4);
 		System.out.println(triangle.isScalene());
 		System.out.println(getScrabbleScore("Quiet"));
-		//System.out.println(reverse("Example"));
+		//cleanPhoneNumber("+1 (293) 0 1920 93");
 		//System.out.println(reverse("Example"));
 		
 	}
@@ -275,11 +276,27 @@ public class EvaluationService {
 	 * 
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
+	 * @throws Exception 
 	 */
-	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		
-		return null;
+	public static String cleanPhoneNumber(String string) {
+
+			if(string.length() != 11)
+			{
+				
+			}
+			for(int i = 0; i < string.length();i++)
+			{
+				
+			}
+			string = string.replaceAll("\\s","");
+			string = string.replaceAll("[^\\d.]", "");
+			if(string.charAt(0) == '1')
+			string = string.replaceFirst("1", "");
+			
+			//Do some research on throws and use that throw thing
+			//Santize for when user inputs more than the
+			System.out.println(string);
+		return string;
 	}
 
 	/**
@@ -293,7 +310,21 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String, Integer> count = new HashMap<>();
+		String[]convert = string.split("[ ,]");
+		for (int i = 0; i<convert.length;i++)
+		{			
+			Integer c = count.get(convert[i]);
+			if(count.get(convert[i]) ==  null)
+			{
+				count.put(convert[i], 1);
+			}
+			else {
+				count.put(convert[i],++c);
+			}
+		}
+		System.out.println(count);
+		return count;
 	}
 
 	/**
