@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,14 @@ public class EvaluationService {
 		System.out.println(triangle.isScalene());
 		System.out.println(getScrabbleScore("Quiet"));
 		//cleanPhoneNumber("+1 (293) 0 1920 93");
-		//System.out.println(reverse("Example"));
+		//System.out.println(toPigLatin("Some Fucking Latin"));
+		for (Long lon : calculatePrimeFactorsOf(32))
+		{
+			System.out.println(lon);
+		}
+		RotationalCipher roter = new RotationalCipher(3);
+		System.out.println(roter.rotate("Titan is a Moon 123!"));
+		System.out.println(isArmstrongNumber(371));
 		
 	}
 	//Checked
@@ -308,6 +316,7 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+	//Checked
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
 		Map<String, Integer> count = new HashMap<>();
@@ -402,9 +411,35 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public String toPigLatin(String string) {
+	public static String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		char[] pigLatin = new char[string.length() + 2];
+		
+		String[] piggys = string.split(" ");
+		for(int i =0; i <piggys.length;i++)
+		{
+			int j = 0;
+			while(j<piggys[i].length())
+			{
+				if(piggys[i].charAt(j) == 'a')
+				{
+					
+				}
+				else
+				{
+					if(true) {
+						
+					}
+					else {
+						
+					}
+				}
+			}
+		}			
+		pigLatin[string.length()] = 'a';
+		pigLatin[string.length() + 1] = 'y';
+		System.out.println(new String(pigLatin));
+		return new String(pigLatin);
 	}
 
 	/**
@@ -422,8 +457,22 @@ public class EvaluationService {
 	 * @param input
 	 * @return
 	 */
-	public boolean isArmstrongNumber(int input) {
+	//Checked
+	public static boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
+		int i = 0,a,temp;
+		
+		temp = input;
+		while(input>0)
+		{
+			a = input%10;
+			input = input/10;
+			i = i+(a*a*a);
+		}
+		if(temp == i)
+		{
+			return true;
+		}
 		return false;
 	}
 
@@ -437,9 +486,19 @@ public class EvaluationService {
 	 * @param l
 	 * @return
 	 */
-	public List<Long> calculatePrimeFactorsOf(long l) {
+	//Checked
+	public static List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> primes= new ArrayList<Long>();
+		for(long i = 2; i < l; i++)
+		{
+			while(l % i == 0)
+			{				
+				primes.add(l);
+				l = l/i;
+			}
+		}
+		return primes;
 	}
 
 	/**
@@ -468,6 +527,7 @@ public class EvaluationService {
 	 * gur ynml qbt. ROT13 Gur dhvpx oebja sbk whzcf bire gur ynml qbt. gives The
 	 * quick brown fox jumps over the lazy dog.
 	 */
+	//Checked
 	static class RotationalCipher {
 		private int key;
 
@@ -478,7 +538,27 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			char[] ch = new char[string.length()];
+			for(int i= 0; i < string.length();i++)
+			{
+				if(Character.isUpperCase(string.charAt(i)))
+				{
+					
+					char cha = (char)(((int)string.charAt(i) + key - 65)%26+65);
+					ch[i]= cha;
+				}
+				else if(Character.isLowerCase(string.charAt(i)))
+				{
+					char cha = (char)(((int)string.charAt(i) + key - 97)%26+97);
+					ch[i] = cha;
+				}
+				else
+				{
+					ch[i] = string.charAt(i);
+				}
+			}
+			System.out.println(new String(ch));
+			return new String(ch);
 		}
 
 	}
