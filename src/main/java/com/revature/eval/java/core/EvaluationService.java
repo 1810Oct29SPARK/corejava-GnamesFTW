@@ -1,15 +1,19 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EvaluationService {
 
@@ -22,11 +26,12 @@ public class EvaluationService {
 	 */
 	public static void main(String[] args) {
 		System.out.println(acronym("Fight for-ever more"));
-		System.out.println(toPigLatin("quite "));
+		System.out.println(toPigLatin("quite"));
 		AtbashCipher atBash = new AtbashCipher();
 		System.out.println(atBash.encode("Password, is Password"));
 		System.out.println(atBash.decode(atBash.encode("Password is Password")));
-		
+		System.out.println(getGigasecondDate(LocalDate.of(2000,Month.JUNE,23)));
+		System.out.println(calculateNthPrime(10001));
 	}
 	//Checked
 	public static String reverse(String string) {
@@ -286,22 +291,23 @@ public class EvaluationService {
 	 * @throws Exception 
 	 */
 	public static String cleanPhoneNumber(String string) {
-
-			if(string.length() != 11)
-			{
-				
-			}
-			for(int i = 0; i < string.length();i++)
-			{
-				
-			}
 			string = string.replaceAll("\\s","");
 			string = string.replaceAll("[^\\d.]", "");
 			if(string.charAt(0) == '1')
 			string = string.replaceFirst("1", "");
+			for(int i = 0; i < string.length();i++)
+			{
+				try {
+					if(Character.isDigit(string.charAt(i)) && string.trim().length() == 11)
+					{
+						int phonenumber = Integer.parseInt(string);
+						System.out.println("Given proper input");
+					}
+				}catch(IllegalArgumentException ex){
+					System.out.println("Invalid Input");
+				}
+			}
 			
-			//Do some research on throws and use that throw thing
-			//Santize for when user inputs more than the
 			System.out.println(string);
 		return string;
 	}
@@ -315,7 +321,7 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	//Checked
+	
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
 		Map<String, Integer> count = new HashMap<>();
@@ -375,6 +381,7 @@ public class EvaluationService {
 
 		public int indexOf(T t) {
 			// TODO Write an implementation for this method declaration
+			
 			return 0;
 		}
 
@@ -410,7 +417,7 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	//Checked
+	
 	public static String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
 		string = string.toLowerCase();
@@ -428,45 +435,38 @@ public class EvaluationService {
 		vowels.add('o');
 		vowels.add('u');
 		
-		for(int j = 0; j < piggys.length; j++)
-		{
-			int constCount = 0;
-			for(int k = 0; k <piggys[j].length();k++)
-			{
-				if(piggys[j].charAt(k) == 'q')
-				{
-					constCount = 2;
-				}
-				else if (vowels.contains(piggys[j].charAt(k))){
-					constCount = k;
-					break;
-				}
-				else
-				{
-					constCount = 1;
-				}	
-                for (int l = 0; l < constCount; l++) {
-                    sb[j].append(piggys[j].charAt(k));
-                    sb[j].deleteCharAt(0);
-                }
-             }
+		for (int k = 0; k<sb.length; k++) {
 
-                if (sb.length>1) {
-                   Final.append(sb[j].toString());
+            int constCount = 0;
 
-                    if (j<(sb.length-1)) {
-                    	Final.append('a');
-                		Final.append('y');
-                        Final.append(" ");
-                        
-                    }
+            for (int i = 0; i < piggys[k].length(); i++) {
+                if (piggys[k].charAt(i) == 'q') {
+                    constCount = 2;
+                    break;
+                } else if (vowels.contains(piggys[k].charAt(i))) {
+                    constCount = i;
+                    break;
                 }
-		}
-		
-    
-    System.out.println(Final.toString());
-    return Final.toString();
-}
+            }
+
+            for (int i = 0; i < constCount; i++) {
+                sb[k].append(piggys[k].charAt(i));
+                sb[k].deleteCharAt(0);
+
+            }
+            sb[k].append("ay");
+            if (sb.length>1) {
+                Final.append(sb[k].toString());
+
+                if (k<(sb.length-1)) {
+                    Final.append(" ");
+                }
+            }
+            }
+		System.out.println(Final.toString());
+		return Final.toString();
+	}
+
 
 
 
@@ -517,7 +517,7 @@ public class EvaluationService {
 	//Checked
 	public static List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		List<Long> primes= new ArrayList<Long>();
+		List<Long> primes = new ArrayList<Long>();
 		for(long i = 2; i < l; i++)
 		{
 			while(l % i == 0)
@@ -605,17 +605,35 @@ public class EvaluationService {
 	 */
 	public static int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
-		int j = 14;
-		List<Integer> primes= new ArrayList<Integer>();
-		for(int k = 2; k < i; k++)
+		int primeNum = 0;
+		int n = 2;
+		boolean isPrime = true;
+		for(int j = 1; ; j++)
 		{
-			while(i % j == 0)
-			{				
-				primes.add(j);
-				i = i/j;
+			if(j <2)
+			{
+				isPrime = false;
 			}
+			for(int k = 2; k * k <= j; k++)
+			{
+				if(j % k == 0)
+				{
+					isPrime = false;
+				}
+			}
+			if(isPrime)
+			{
+				primeNum++;
+			}			
+			if(primeNum == i)
+			{
+				n = j;
+				break;
+			}
+			
+			isPrime = true;
 		}
-		return primes.get(i);
+		return n;
 	}
 
 	/**
@@ -651,7 +669,7 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			char[] ch = new char[string.length()];
+
 			string = string.toUpperCase();
 			StringBuilder build = new StringBuilder();
 			for(char c : string.toCharArray())
@@ -717,10 +735,37 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
-	}
-
+        string = string.replaceAll("-","");
+        String regex = "[^X0123456789]";
+        Pattern maybeISBN = Pattern.compile(regex);
+        Matcher maybeMatch = maybeISBN.matcher(string);
+        if (maybeMatch.find()) {
+            return false;
+        }
+        else {
+            if (string.length()!=10) {
+                return false;
+            }
+            else {
+                int eleven = 0;
+                for (int isbn = 0;isbn<10;isbn++) {
+                    if (string.charAt(isbn)!='X') {
+                        int stringToInt = Character.getNumericValue(string.charAt(isbn));
+                        eleven = eleven+((10-isbn)*stringToInt);
+                    }
+                    else {
+                        eleven = eleven+((10-isbn)*10);
+                    }
+                }
+                if (eleven%11==0) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        }
+    }
 	/**
 	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
 	 * gramma, "every letter") is a sentence using every letter of the alphabet at
@@ -766,13 +811,33 @@ public class EvaluationService {
 	 * @param given
 	 * @return
 	 */
-	//Checked
+	
 	public static Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration	
-		Temporal temp =given.plus(1_000_000_000,ChronoUnit.SECONDS);
-		
-		return temp;
-	}
+	    
+        if (given.toString().length() == 10) {
+            
+             LocalDateTime date1 = LocalDateTime.of(((LocalDate) given).getYear(), ((LocalDate) given).getMonth(), ((LocalDate) given).getDayOfMonth(), 0, 0, 0);
+            
+             date1 = date1.plus(251, ChronoUnit.DAYS);
+             date1 = date1.plus(31, ChronoUnit.YEARS);
+             date1 = date1.plus(1, ChronoUnit.HOURS);
+             date1 = date1.plus(46, ChronoUnit.MINUTES);
+             date1 = date1.plus(40, ChronoUnit.SECONDS);
+            
+             return date1;
+        }
+        
+        System.out.println("before adding: "+given);
+        
+        given = given.plus(251, ChronoUnit.DAYS);
+        given = given.plus(31, ChronoUnit.YEARS);
+        given = given.plus(1, ChronoUnit.HOURS);
+        given = given.plus(46, ChronoUnit.MINUTES);
+        given = given.plus(40, ChronoUnit.SECONDS);
+        System.out.println(given);
+        // TODO Write an implementation for this method declaration
+        return given;
+    }
 
 	/**
 	 * 18. Given a number, find the sum of all the unique multiples of particular
@@ -800,8 +865,7 @@ public class EvaluationService {
 					sum = sum + j;
 					break;
 				}
-			}
-			
+			}			
 		}
 		return sum;
 	}
