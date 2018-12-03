@@ -25,13 +25,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public static void main(String[] args) {
-		System.out.println(acronym("Fight for-ever more"));
-		System.out.println(toPigLatin("quite"));
-		AtbashCipher atBash = new AtbashCipher();
-		System.out.println(atBash.encode("Password, is Password"));
-		System.out.println(atBash.decode(atBash.encode("Password is Password")));
-		System.out.println(getGigasecondDate(LocalDate.of(2000,Month.JUNE,23)));
-		System.out.println(calculateNthPrime(10001));
+		System.out.println(solveWordProblem("What is -3 plus 1?"));
 	}
 	//Checked
 	public static String reverse(String string) {
@@ -964,7 +958,7 @@ public class EvaluationService {
 		// TODO Write an implementation for this method declaration
 		int sum = 0;
 		String[] str = string.split(" ");
-		char[] ch = new char[string.length()];
+		String[] ch = new String[string.length()];
 		int count = 0;
 		String math ="";
 		for(int i = 0; i < str.length; i++)
@@ -973,43 +967,48 @@ public class EvaluationService {
 			{	
 				if(str[i].matches("-"))
 				{
-					ch[count] = str[i].charAt(j);
+					ch[count] = str[i];
 					count ++;
 				}
 				if(Character.isDigit(str[i].charAt(j)))
 				{
-					ch[count] = str[i].charAt(j);
+					ch[count] = str[i];
 					System.out.println(str[i]);	
 					count++;
 				}
 				
 				if(str[i].matches("plus"))
 				{
-					ch[i] = '+';
+					ch[i] = "+";
 					count++;
 				}
 				else if(str[i].matches("multiply"))
 				{
-					ch[i] = '*';
+					ch[i] = "*";
 					count++;
 				}				
 				else if(str[i].matches("subtract"))
 				{
-					ch[i] = '-';
+					ch[i] = "-";
 					count++;
 				}				
 				else if(str[i].matches("divide"))
 				{
-					ch[i] = '/';
+					ch[i] = "/";
 					count++;
 				}
 				else
 				{
-					ch[i] = ' ';
+					ch[i] = " ";
 				}
 			}
-		}		
-		
+		}	
+		Integer[] questions = new Integer[ch.length];
+		for(int i = 0; i < ch.length; i++)
+		{
+		 questions[i]= Integer.parseInt(ch[i]);
+		 
+		}
 		/*math = new String(ch).replaceAll("\\s", "");
 		System.out.println(math);
 		String[] result = math.split("+");
